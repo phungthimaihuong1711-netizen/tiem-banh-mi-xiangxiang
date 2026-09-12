@@ -1,0 +1,6 @@
+{
+  "name": "Không Gian Giới Thiệu Nhân Vật",
+  "description": "Không gian trưng bày và giới thiệu nhân vật chuyên nghiệp gồm hình ảnh, thông tin chi tiết, tin nhắn đầu, lịch sử hội thoại và danh sách liên kết.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
