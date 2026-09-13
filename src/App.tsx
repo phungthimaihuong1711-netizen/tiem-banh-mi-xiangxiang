@@ -9,14 +9,13 @@ import { ScrapbookView } from './components/ScrapbookView';
 import { BreadCategoriesView } from './components/BreadCategoriesView';
 import { CharacterListView } from './components/CharacterListView';
 import { CharacterDetailView } from './components/CharacterDetailView';
-import { BakeryCharacterModal } from './components/BakeryCharacterModal';
 import { ImageViewerModal } from './components/ImageViewerModal';
 
-// Storage key mới cho dữ liệu người dùng thực tế (không nạp dữ liệu demo cũ)
+// Storage key cho dữ liệu người dùng thực tế
 const USER_STORAGE_KEY = 'xiangxiang_bakery_user_characters_v3';
 
 export default function App() {
-  // Characters state with localStorage persistence (bắt đầu hoàn toàn trống)
+  // Characters state with localStorage persistence
   const [characters, setCharacters] = useState<Character[]>(() => {
     try {
       const saved = localStorage.getItem(USER_STORAGE_KEY);
@@ -36,10 +35,6 @@ export default function App() {
   const [currentView, setCurrentView] = useState<AppView>('welcome');
   const [selectedCategoryId, setSelectedCategoryId] = useState<string>('banh-mi-trung');
   const [selectedCharacterId, setSelectedCharacterId] = useState<string>('');
-
-  // Modal states
-  const [isAddEditModalOpen, setIsAddEditModalOpen] = useState(false);
-  const [characterToEdit, setCharacterToEdit] = useState<Character | null>(null);
 
   // Lightbox Image Viewer
   const [imageViewerData, setImageViewerData] = useState<{
@@ -142,28 +137,6 @@ export default function App() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  // ================= MODAL & EDIT HANDLERS =================
-  const handleOpenAddModal = () => {
-    setCharacterToEdit(null);
-    setIsAddEditModalOpen(true);
-  };
-
-  const handleOpenEditModal = () => {
-    setCharacterToEdit(currentCharacter);
-    setIsAddEditModalOpen(true);
-  };
-
-  const handleSaveCharacter = (savedChar: Character) => {
-    const exists = characters.some((c) => c.id === savedChar.id);
-    if (exists) {
-      setCharacters(characters.map((c) => (c.id === savedChar.id ? savedChar : c)));
-    } else {
-      setCharacters([savedChar, ...characters]);
-      setSelectedCharacterId(savedChar.id);
-      setSelectedCategoryId(normalizeCategory(savedChar.category));
-    }
-  };
-
   const handleSendMessage = (text: string) => {
     if (!currentCharacter) return;
     const newMessage = {
@@ -245,7 +218,6 @@ export default function App() {
                 characters={categoryCharacters}
                 onSelectCharacter={handleSelectCharacter}
                 onBackToCategories={handleBackToCategories}
-                onOpenAddModal={handleOpenAddModal}
               />
             )}
 
@@ -256,7 +228,6 @@ export default function App() {
                   character={currentCharacter}
                   category={currentCategory}
                   onBackToList={handleBackToList}
-                  onOpenEditModal={handleOpenEditModal}
                   onViewImage={handleViewImage}
                   onSendMessage={handleSendMessage}
                 />
@@ -289,15 +260,6 @@ export default function App() {
           </footer>
         )}
       </div>
-
-      {/* Add / Edit Character Modal */}
-      <BakeryCharacterModal
-        isOpen={isAddEditModalOpen}
-        onClose={() => setIsAddEditModalOpen(false)}
-        onSave={handleSaveCharacter}
-        characterToEdit={characterToEdit}
-        defaultCategoryId={selectedCategoryId}
-      />
 
       {/* Fullscreen Image Lightbox Viewer */}
       <ImageViewerModal

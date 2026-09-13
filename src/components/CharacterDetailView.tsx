@@ -8,7 +8,6 @@ import {
   Info,
   Maximize2,
   ExternalLink,
-  Edit3,
   Heart,
   Send,
   User,
@@ -21,7 +20,6 @@ interface CharacterDetailViewProps {
   character: Character;
   category: BreadCategory;
   onBackToList: () => void;
-  onOpenEditModal: () => void;
   onViewImage: (url: string, title: string) => void;
   onSendMessage?: (text: string) => void;
 }
@@ -30,7 +28,6 @@ export const CharacterDetailView: React.FC<CharacterDetailViewProps> = ({
   character,
   category,
   onBackToList,
-  onOpenEditModal,
   onViewImage,
   onSendMessage,
 }) => {
@@ -80,14 +77,6 @@ export const CharacterDetailView: React.FC<CharacterDetailViewProps> = ({
             <span className={`text-[11px] font-bold px-2.5 py-1 rounded-full ${category.badgeBg} ${category.badgeText} border border-pink-200/60 shadow-xs`}>
               {category.emoji} {category.name}
             </span>
-            <button
-              id="btn-edit-char"
-              onClick={onOpenEditModal}
-              className="p-2 rounded-xl bg-white/90 hover:bg-white text-stone-600 hover:text-pink-600 border border-pink-200 shadow-xs transition-colors cursor-pointer"
-              title="Chỉnh sửa nhân vật"
-            >
-              <Edit3 className="w-4 h-4" />
-            </button>
           </div>
         </div>
 

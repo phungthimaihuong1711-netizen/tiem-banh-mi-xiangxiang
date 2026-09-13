@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'motion/react';
-import { ArrowLeft, Plus, Search, ChevronRight, User, Sparkles, Heart } from 'lucide-react';
+import { ArrowLeft, Search, ChevronRight, User, Sparkles, Heart } from 'lucide-react';
 import { Character, BreadCategory } from '../types';
 import { ScrapbookPageBackground } from './ScrapbookPageBackground';
 
@@ -9,7 +9,6 @@ interface CharacterListViewProps {
   characters: Character[];
   onSelectCharacter: (charId: string) => void;
   onBackToCategories: () => void;
-  onOpenAddModal: () => void;
 }
 
 export const CharacterListView: React.FC<CharacterListViewProps> = ({
@@ -17,7 +16,6 @@ export const CharacterListView: React.FC<CharacterListViewProps> = ({
   characters,
   onSelectCharacter,
   onBackToCategories,
-  onOpenAddModal,
 }) => {
   const [searchTerm, setSearchTerm] = useState('');
 
@@ -50,15 +48,6 @@ export const CharacterListView: React.FC<CharacterListViewProps> = ({
           >
             <ArrowLeft className="w-4 h-4 text-pink-500" />
             <span>Menu các loại bánh</span>
-          </button>
-
-          <button
-            id="btn-add-character"
-            onClick={onOpenAddModal}
-            className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-gradient-to-r from-pink-500 to-rose-400 text-white font-bold text-xs shadow-xs hover:from-pink-600 hover:to-rose-500 transition-all cursor-pointer select-none"
-          >
-            <Plus className="w-3.5 h-3.5" />
-            <span>Thêm nhân vật</span>
           </button>
         </div>
 
@@ -163,18 +152,6 @@ export const CharacterListView: React.FC<CharacterListViewProps> = ({
               <p className="text-xs sm:text-sm text-stone-600 font-medium max-w-sm mx-auto leading-relaxed">
                 Những câu chuyện mới sẽ sớm được thêm vào đây.
               </p>
-
-              {/* Nút thêm nhân vật thủ công nếu muốn */}
-              <div className="mt-5">
-                <button
-                  id="btn-empty-add-character"
-                  onClick={onOpenAddModal}
-                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-2xl bg-gradient-to-r from-pink-500 to-rose-400 hover:from-pink-600 hover:to-rose-500 text-white font-bold text-xs sm:text-sm shadow-sm transition-all cursor-pointer select-none"
-                >
-                  <Plus className="w-4 h-4" />
-                  <span>Thêm nhân vật vào {category.name}</span>
-                </button>
-              </div>
             </motion.div>
           ) : filteredChars.length > 0 ? (
             filteredChars.map((char, index) => (
