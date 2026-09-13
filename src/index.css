@@ -1,5 +1,11 @@
 @import "tailwindcss";
 
+@layer base {
+  body {
+    font-family: 'Quicksand', system-ui, -apple-system, sans-serif;
+  }
+}
+
 @layer utilities {
   .custom-scrollbar::-webkit-scrollbar {
     width: 6px;
@@ -15,5 +21,58 @@
   }
   .custom-scrollbar::-webkit-scrollbar-thumb:hover {
     background: rgba(245, 158, 11, 0.6);
+  }
+
+  /* Kawaii Bakery Slow Falling Animation */
+  @keyframes slowFall {
+    0% {
+      transform: translateY(-10vh) rotate(var(--rot-start, 0deg));
+      opacity: 0;
+    }
+    12% {
+      opacity: var(--sticker-opacity, 0.7);
+    }
+    88% {
+      opacity: var(--sticker-opacity, 0.7);
+    }
+    100% {
+      transform: translateY(110vh) rotate(var(--rot-end, 8deg));
+      opacity: 0;
+    }
+  }
+
+  @keyframes gentleTwinkle {
+    0%, 100% {
+      opacity: calc(var(--sticker-opacity, 0.6) * 0.7);
+      transform: scale(0.85);
+    }
+    50% {
+      opacity: var(--sticker-opacity, 0.85);
+      transform: scale(1.15);
+    }
+  }
+
+  .falling-bakery-sticker {
+    position: absolute;
+    top: 0;
+    pointer-events: none;
+    user-select: none;
+    will-change: transform;
+    animation-name: slowFall;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+  }
+
+  .twinkle-dot {
+    position: absolute;
+    border-radius: 9999px;
+    pointer-events: none;
+    animation: gentleTwinkle 3s ease-in-out infinite;
+  }
+
+  /* 3D Book Container for Realistic Kawaii Scrapbook Opening */
+  .book-perspective {
+    perspective: 1200px;
+    perspective-origin: center center;
   }
 }

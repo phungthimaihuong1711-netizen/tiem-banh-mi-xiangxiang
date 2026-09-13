@@ -1,3 +1,23 @@
+export type BreadCategoryId =
+  | 'banh-mi-trung'
+  | 'banh-mi-pa-te'
+  | 'banh-mi-thit'
+  | 'banh-mi-ngot'
+  | 'banh-mi-dac-biet';
+
+export interface BreadCategory {
+  id: BreadCategoryId;
+  name: string;
+  genre: string; // Thể loại char: Hiện đại, Âu cổ, Cổ trang, NP, Open World
+  description: string;
+  image: string;
+  badgeBg: string;
+  badgeText: string;
+  themeColor: string;
+  accentColor: string;
+  emoji: string;
+}
+
 export interface MessageItem {
   id: string;
   sender: 'character' | 'user' | 'narrator';
@@ -35,20 +55,43 @@ export interface CharacterInfo {
   };
 }
 
+/**
+ * Cấu trúc dữ liệu nhân vật chuẩn theo yêu cầu:
+ * {
+ *   id: "",
+ *   name: "",
+ *   category: "",
+ *   avatar: "",
+ *   shortDescription: "",
+ *   introduction: "",
+ *   plot: "",
+ *   chatLink: ""
+ * }
+ */
 export interface Character {
   id: string;
   name: string;
-  title: string;
-  category: 'Lịch sử' | 'Thần thoại' | 'Khoa học viễn tưởng' | 'Kỳ ảo / Cổ trang' | 'Đương đại' | string;
-  avatarUrl: string;
-  coverUrl: string;
-  status: 'active' | 'legendary' | 'mystic' | 'archived';
-  quote: string;
-  bio: string;
-  initialMessage: string;
-  messageHistory: MessageItem[];
-  info: CharacterInfo;
-  links: CharacterLink[];
-  tags: string[];
-  updatedAt: string;
+  category: BreadCategoryId | string; // Liên kết với 1 trong 5 loại bánh mì
+  avatar: string;
+  shortDescription: string;
+  introduction: string;
+  plot: string;
+  chatLink: string;
+
+  // Thuộc tính bổ sung để lưu trữ đầy đủ thông tin chuyên sâu (nếu có)
+  avatarUrl?: string;
+  bio?: string;
+  initialMessage?: string;
+  title?: string;
+  status?: 'active' | 'legendary' | 'mystic' | 'archived';
+  quote?: string;
+  coverUrl?: string;
+  info?: CharacterInfo;
+  messageHistory?: MessageItem[];
+  links?: CharacterLink[];
+  tags?: string[];
+  updatedAt?: string;
 }
+
+export type AppView = 'welcome' | 'scrapbook' | 'categories' | 'characters' | 'detail';
+
